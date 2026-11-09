@@ -1,0 +1,25 @@
+name: Cyber Cat
+accent: '#7ee59d'
+cursor: '#f5e0dc'
+background: '#192631'
+foreground: '#d0e4b3'
+details: darker
+terminal_colors:
+  normal:
+    black: '#2b4539'
+    red: '#f38ba8'
+    green: '#7ee59d'
+    yellow: '#f9e2af'
+    blue: '#89b4fa'
+    magenta: '#f5c2e7'
+    cyan: '#74e0d9'
+    white: '#8bb07c'
+  bright:
+    black: '#3a5846'
+    red: '#f37899'
+    green: '#57da8b'
+    yellow: '#ebd391'
+    blue: '#73a8fc'
+    magenta: '#f2aedd'
+    cyan: '#37d5d0'
+    white: '#aeca97'

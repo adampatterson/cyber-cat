@@ -55,8 +55,56 @@ npm run build   # writes dist/
 | `dist/cyber-cat.css` | `--ctp-<name>` (hex) and `--ctp-<name>-rgb` (`r g b`) on `:root` |
 | `dist/_cyber-cat.scss` | `$<name>` variables and a `$colors` map |
 | `dist/preview.html` | Swatches, terminal, code, diff and UI samples |
+| `dist/warp/cyber-cat.yaml` | Warp theme |
+| `dist/zed/cyber-cat.json` | Zed theme |
+| `dist/vscode/` | VS Code theme extension (`package.json` and `themes/`) |
 
-To change a color, edit `src/seeds.mjs`, then run `npm test` and `npm run build`.
+To change a color, edit `src/seeds.mjs`, then run `npm test` and `npm run build`. Run `npm run screenshot` to refresh `dist/preview.png`.
+
+## Use it
+
+Run `npm run build` first. Every theme is generated from the same palette, so all of them use the same colors.
+
+### Web (CSS or SCSS)
+
+Copy `dist/cyber-cat.css` into your project and load it. Then use the variables:
+
+```css
+body { background: var(--ctp-base); color: var(--ctp-text); }
+.overlay { background: rgb(var(--ctp-crust-rgb) / 0.5); }
+```
+
+For SCSS, copy `dist/_cyber-cat.scss`, then `@use "cyber-cat" as ctp;` and write `ctp.$base`.
+
+### Warp
+
+```sh
+mkdir -p ~/.warp/themes
+cp dist/warp/cyber-cat.yaml ~/.warp/themes/
+```
+
+Open Settings, then Appearance, then Themes, and pick Cyber Cat. Warp can take a few minutes to find a new themes folder. Restart Warp to skip the wait.
+
+### Zed
+
+```sh
+mkdir -p ~/.config/zed/themes
+cp dist/zed/cyber-cat.json ~/.config/zed/themes/
+```
+
+Run `theme selector: toggle` from the command palette and pick Cyber Cat. To set it by default, add `"theme": "Cyber Cat"` to your Zed `settings.json`.
+
+### VS Code
+
+```sh
+cp -R dist/vscode ~/.vscode/extensions/cyber-cat
+```
+
+Restart VS Code. Run `Preferences: Color Theme` and pick Cyber Cat. To develop the theme, open `dist/vscode` in VS Code and press F5. VS Code applies edits to the theme file live in the development window.
+
+### PhpStorm
+
+There is no PhpStorm generator yet. The 16 terminal colors and the syntax roles in `src/themes.mjs` map to PhpStorm's color scheme, so you can copy them by hand: Settings, then Editor, then Color Scheme.
 
 ## Seed colors
 

@@ -1,10 +1,13 @@
-// Builds dist/palette.json, dist/cyber-cat.css, dist/_cyber-cat.scss and dist/preview.html
+// Builds dist/palette.json, dist/cyber-cat.css, dist/_cyber-cat.scss, dist/preview.html
+// and the Warp, Zed and VS Code themes
 // from src/seeds.mjs. Run with `npm run build`.
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { brightVariant, contrast, hexToHsl, hexToOklch, hexToRgb } from './color.mjs';
 import { colors, flavor, ACCENTS, NEUTRALS } from './seeds.mjs';
+import { buildVscode, buildVscodePackage, buildWarp, buildZed } from './themes.mjs';
 
 export const VERSION = '0.1.0';
 
@@ -275,8 +278,13 @@ if (isMain) {
     'cyber-cat.css': buildCss(palette),
     '_cyber-cat.scss': buildScss(palette),
     'preview.html': buildPreview(palette),
+    'warp/cyber-cat.yaml': buildWarp(palette),
+    'zed/cyber-cat.json': buildZed(palette),
+    'vscode/package.json': buildVscodePackage(palette),
+    'vscode/themes/cyber-cat-color-theme.json': buildVscode(palette),
   };
   for (const [name, body] of Object.entries(files)) {
+    mkdirSync(dirname(`${dist}${name}`), { recursive: true });
     writeFileSync(`${dist}${name}`, body);
     console.warn(`wrote dist/${name}`);
   }
