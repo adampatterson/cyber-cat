@@ -1,7 +1,7 @@
 // Builds dist/palette.json, dist/cyber-cat.css, dist/_cyber-cat.scss and dist/preview.html
 // from src/seeds.mjs. Run with `npm run build`.
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { brightVariant, contrast, hexToHsl, hexToOklch, hexToRgb } from './color.mjs';
 import { colors, flavor, ACCENTS, NEUTRALS } from './seeds.mjs';
@@ -245,6 +245,25 @@ ${span('green', '✔ docked')} ${span('yellow', '▲ low fuel')} ${span('red', '
 `;
 };
 
+// GitHub strips CSS from Markdown, so swatches are image chips from placehold.co.
+export const buildSwatches = (palette) => {
+  const rows = entries(palette).map(([, c]) => {
+    const h = c.hex.slice(1);
+    return `| ![${c.name}](https://placehold.co/24x24/${h}/${h}.png) | ${c.name} | \`${c.hex}\` | \`${c.rgb.r} ${c.rgb.g} ${c.rgb.b}\` |`;
+  });
+  return `| | Name | Hex | RGB |\n|---|---|---|---|\n${rows.join('\n')}`;
+};
+
+const MARK_START = '<!-- swatches:start -->';
+const MARK_END = '<!-- swatches:end -->';
+
+export const injectSwatches = (readme, table) => {
+  const start = readme.indexOf(MARK_START);
+  const end = readme.indexOf(MARK_END);
+  if (start === -1 || end === -1 || end < start) throw new Error('README.md is missing swatch markers');
+  return `${readme.slice(0, start + MARK_START.length)}\n${table}\n${readme.slice(end)}`;
+};
+
 const isMain = process.argv[1] === fileURLToPath(import.meta.url);
 
 if (isMain) {
@@ -261,4 +280,7 @@ if (isMain) {
     writeFileSync(`${dist}${name}`, body);
     console.warn(`wrote dist/${name}`);
   }
+  const readmeUrl = new URL('../README.md', import.meta.url);
+  writeFileSync(readmeUrl, injectSwatches(readFileSync(readmeUrl, 'utf8'), buildSwatches(palette)));
+  console.warn('wrote swatches to README.md');
 }

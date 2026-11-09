@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "node src/build.mjs",
+    "screenshot": "node src/screenshot.mjs",
     "test": "node --test test/*.test.mjs"
   }
 }

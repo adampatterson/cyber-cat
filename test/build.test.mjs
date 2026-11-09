@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPalette, buildCss, buildScss, buildPreview } from '../src/build.mjs';
+import { buildPalette, buildCss, buildScss, buildPreview, buildSwatches, injectSwatches } from '../src/build.mjs';
 
 // Field order copied from catppuccin/palette v1.8.0 palette.json.
 const FLAVOR_KEYS = ['name', 'emoji', 'order', 'dark', 'colors', 'ansiColors'];
@@ -75,4 +75,21 @@ test('preview links the CSS and shows every color', () => {
   const html = buildPreview(palette);
   assert.match(html, /<link rel="stylesheet" href="cyber-cat\.css">/);
   for (const c of Object.values(flavor.colors)) assert.ok(html.includes(c.hex), c.name);
+});
+
+test('swatch table lists all 26 colors with hex and an image chip', () => {
+  const md = buildSwatches(palette);
+  const rows = md.split('\n').filter((l) => l.startsWith('| ![')).length;
+  assert.equal(rows, 26);
+  for (const c of Object.values(flavor.colors)) {
+    const h = c.hex.slice(1);
+    assert.ok(md.includes(`\`${c.hex}\``), `missing ${c.hex}`);
+    assert.ok(md.includes(`https://placehold.co/24x24/${h}/${h}.png`));
+  }
+});
+
+test('injectSwatches replaces only the marked block', () => {
+  const src = 'a\n<!-- swatches:start -->\nold\n<!-- swatches:end -->\nb\n';
+  assert.equal(injectSwatches(src, 'NEW'), 'a\n<!-- swatches:start -->\nNEW\n<!-- swatches:end -->\nb\n');
+  assert.throws(() => injectSwatches('no markers', 'NEW'));
 });
