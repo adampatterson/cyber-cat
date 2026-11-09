@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Cat palette preview</title>
+<link rel="stylesheet" href="cyber-cat.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 48px; background: var(--ctp-base); color: var(--ctp-text);
+    font: 14px/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+  h1 { margin: 0 0 4px; font-size: 32px; letter-spacing: 0.08em; text-transform: uppercase; }
+  h2 { margin: 48px 0 16px; font-size: 14px; color: var(--ctp-subtext0); text-transform: uppercase; letter-spacing: 0.12em; }
+  p.lede { margin: 0; color: var(--ctp-subtext1); }
+  code { font: inherit; }
+  .strip { display: grid; grid-template-columns: repeat(12, 1fr); border: 2px solid var(--ctp-crust); }
+  .strip__cell { display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 120px; padding: 8px; font-size: 11px; }
+  .cards { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; }
+  .card { display: flex; flex-direction: column; gap: 2px; padding: 10px; background: var(--ctp-mantle); border: 2px solid var(--ctp-surface0); }
+  .card__chip { display: flex; align-items: flex-end; height: 56px; margin-bottom: 6px; padding: 4px 6px; font-size: 11px; font-weight: 700; }
+  .card small { color: var(--ctp-overlay1); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .pane { background: var(--ctp-mantle); border: 2px solid var(--ctp-surface1); }
+  .pane__bar { padding: 6px 12px; background: var(--ctp-crust); color: var(--ctp-overlay2); font-size: 12px; border-bottom: 2px solid var(--ctp-surface0); }
+  .pane__body { padding: 12px; overflow-x: auto; white-space: pre; }
+  .ansi { margin-right: 10px; }
+  .line { display: block; padding-right: 12px; }
+  .line--cursor { background: rgb(var(--ctp-text-rgb) / 0.1); }
+  .line__no { display: inline-block; width: 3ch; margin-right: 2ch; text-align: right; color: var(--ctp-overlay1); }
+  .line__no--active { color: var(--ctp-lavender); }
+  .cursor { display: inline-block; width: 1ch; height: 1.2em; vertical-align: text-bottom; background: var(--ctp-rosewater); }
+  .sel { background: rgb(var(--ctp-overlay2-rgb) / 0.25); }
+  .diff div { padding: 0 12px; }
+  .diff .meta { color: var(--ctp-overlay2); }
+  .diff .file { color: var(--ctp-pink); }
+  .diff .hunk { color: var(--ctp-peach); }
+  .diff .add { background: rgb(var(--ctp-green-rgb) / 0.2); }
+  .diff .add mark { background: rgb(var(--ctp-green-rgb) / 0.15); color: inherit; }
+  .diff .del { background: rgb(var(--ctp-red-rgb) / 0.2); }
+  .diff .del mark { background: rgb(var(--ctp-red-rgb) / 0.15); color: inherit; }
+  .diff .chg { background: rgb(var(--ctp-blue-rgb) / 0.2); }
+  .dialog { margin-top: 16px; padding: 16px 20px; background: var(--ctp-surface0); border: 4px solid var(--ctp-text); box-shadow: 0 0 0 4px var(--ctp-crust); font-size: 20px; }
+  .dialog--light { background: var(--ctp-text); color: var(--ctp-base); border-color: var(--ctp-surface0); }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px; }
+  .btn { padding: 8px 16px; border: 2px solid var(--ctp-crust); font: inherit; font-weight: 700; color: var(--ctp-base); cursor: pointer; }
+  .btn--ghost { background: var(--ctp-surface0); color: var(--ctp-text); border-color: var(--ctp-overlay0); }
+  .pill { padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--ctp-base); }
+  .status { display: flex; gap: 16px; }
+  a { color: var(--ctp-blue); }
+  a:hover { color: var(--ctp-sky); }
+</style>
+</head>
+<body>
+<h1>Cyber Cat</h1>
+<p class="lede">Catppuccin-format palette, v0.1.0. Green handheld UI, full-strength accents. <a href="palette.json">palette.json</a></p>
+
+<h2>Neutrals</h2>
+<div class="strip">
+<div class="strip__cell" style="background: var(--ctp-text); color: var(--ctp-crust)"><b>Text</b><code>#d0e4b3</code></div>
+<div class="strip__cell" style="background: var(--ctp-subtext1); color: var(--ctp-crust)"><b>Subtext 1</b><code>#aeca97</code></div>
+<div class="strip__cell" style="background: var(--ctp-subtext0); color: var(--ctp-crust)"><b>Subtext 0</b><code>#8bb07c</code></div>
+<div class="strip__cell" style="background: var(--ctp-overlay2); color: var(--ctp-crust)"><b>Overlay 2</b><code>#74996e</code></div>
+<div class="strip__cell" style="background: var(--ctp-overlay1); color: var(--ctp-text)"><b>Overlay 1</b><code>#5f8260</code></div>
+<div class="strip__cell" style="background: var(--ctp-overlay0); color: var(--ctp-text)"><b>Overlay 0</b><code>#4b6c52</code></div>
+<div class="strip__cell" style="background: var(--ctp-surface2); color: var(--ctp-text)"><b>Surface 2</b><code>#3a5846</code></div>
+<div class="strip__cell" style="background: var(--ctp-surface1); color: var(--ctp-text)"><b>Surface 1</b><code>#2b4539</code></div>
+<div class="strip__cell" style="background: var(--ctp-surface0); color: var(--ctp-text)"><b>Surface 0</b><code>#1e332c</code></div>
+<div class="strip__cell" style="background: var(--ctp-base); color: var(--ctp-text)"><b>Base</b><code>#192631</code></div>
+<div class="strip__cell" style="background: var(--ctp-mantle); color: var(--ctp-text)"><b>Mantle</b><code>#111e28</code></div>
+<div class="strip__cell" style="background: var(--ctp-crust); color: var(--ctp-text)"><b>Crust</b><code>#091520</code></div>
+</div>
+
+<h2>Accents</h2>
+<div class="cards">
+<div class="card"><div class="card__chip" style="background: var(--ctp-rosewater)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-rosewater)">Rosewater</b><code>#f5e0dc</code><small>12.16:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-flamingo)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-flamingo)">Flamingo</b><code>#f2cdcd</code><small>10.56:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-pink)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-pink)">Pink</b><code>#f5c2e7</code><small>10.09:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-mauve)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-mauve)">Mauve</b><code>#cba6f7</code><small>7.58:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-red)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-red)">Red</b><code>#f38ba8</code><small>6.65:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-maroon)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-maroon)">Maroon</b><code>#eba0ac</code><small>7.45:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-peach)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-peach)">Peach</b><code>#fab387</code><small>8.70:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-yellow)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-yellow)">Yellow</b><code>#f9e2af</code><small>12.12:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-green)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-green)">Green</b><code>#7ee59d</code><small>9.97:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-teal)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-teal)">Teal</b><code>#74e0d9</code><small>9.84:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-sky)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-sky)">Sky</b><code>#7fd6ed</code><small>9.35:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-sapphire)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-sapphire)">Sapphire</b><code>#74c7ec</code><small>8.16:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-blue)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-blue)">Blue</b><code>#89b4fa</code><small>7.32:1 on base</small></div>
+<div class="card"><div class="card__chip" style="background: var(--ctp-lavender)"><span style="color: var(--ctp-base)">On accent</span></div><b style="color: var(--ctp-lavender)">Lavender</b><code>#b4befe</code><small>8.61:1 on base</small></div>
+</div>
+
+<div class="grid2">
+<section>
+<h2>Terminal</h2>
+<div class="pane">
+<div class="pane__bar">zsh - cockpit</div>
+<div class="pane__body"><span style="color: var(--ctp-green)">➜</span> <span style="color: var(--ctp-sapphire)">~/solastra</span> <span style="color: var(--ctp-subtext0)">git:(</span><span style="color: var(--ctp-red)">main</span><span style="color: var(--ctp-subtext0)">)</span> ls -la
+<span style="color: var(--ctp-blue)">drwxr-xr-x</span>  <span style="color: var(--ctp-yellow)">crew</span>  <span style="color: var(--ctp-blue)">logs/</span>
+<span style="color: var(--ctp-text)">-rw-r--r--</span>  <span style="color: var(--ctp-yellow)">crew</span>  manifest.toml
+<span style="color: var(--ctp-green)">-rwxr-xr-x</span>  <span style="color: var(--ctp-yellow)">crew</span>  <span style="color: var(--ctp-green)">launch.sh</span>
+<span style="color: var(--ctp-teal)">lrwxr-xr-x</span>  <span style="color: var(--ctp-yellow)">crew</span>  <span style="color: var(--ctp-teal)">radio</span> -&gt; /dev/tty0
+<span style="color: var(--ctp-red)">error:</span> hull breach in <span style="color: var(--ctp-peach)">sector 7</span>
+
+<span class="ansi" style="color: #2b4539" title="Black #2b4539">00&#9608;&#9608;</span><span class="ansi" style="color: #f38ba8" title="Red #f38ba8">01&#9608;&#9608;</span><span class="ansi" style="color: #7ee59d" title="Green #7ee59d">02&#9608;&#9608;</span><span class="ansi" style="color: #f9e2af" title="Yellow #f9e2af">03&#9608;&#9608;</span><span class="ansi" style="color: #89b4fa" title="Blue #89b4fa">04&#9608;&#9608;</span><span class="ansi" style="color: #f5c2e7" title="Magenta #f5c2e7">05&#9608;&#9608;</span><span class="ansi" style="color: #74e0d9" title="Cyan #74e0d9">06&#9608;&#9608;</span><span class="ansi" style="color: #8bb07c" title="White #8bb07c">07&#9608;&#9608;</span>
+<span class="ansi" style="color: #3a5846" title="Bright Black #3a5846">08&#9608;&#9608;</span><span class="ansi" style="color: #f37899" title="Bright Red #f37899">09&#9608;&#9608;</span><span class="ansi" style="color: #57da8b" title="Bright Green #57da8b">10&#9608;&#9608;</span><span class="ansi" style="color: #ebd391" title="Bright Yellow #ebd391">11&#9608;&#9608;</span><span class="ansi" style="color: #73a8fc" title="Bright Blue #73a8fc">12&#9608;&#9608;</span><span class="ansi" style="color: #f2aedd" title="Bright Magenta #f2aedd">13&#9608;&#9608;</span><span class="ansi" style="color: #37d5d0" title="Bright Cyan #37d5d0">14&#9608;&#9608;</span><span class="ansi" style="color: #aeca97" title="Bright White #aeca97">15&#9608;&#9608;</span>
+<span class="sel">selected text (overlay2 at 25%)</span></div>
+</div>
+</section>
+
+<section>
+<h2>Code</h2>
+<div class="pane">
+<div class="pane__bar">radio.ts</div>
+<div class="pane__body"><div class="line"><span class="line__no">1</span><span style="color: var(--ctp-overlay2)">// Boot sequence for the cockpit display</span></div><div class="line"><span class="line__no">2</span><span style="color: var(--ctp-mauve)">import</span> <span style="color: var(--ctp-overlay2)">{</span> <span style="color: var(--ctp-text)">Signal</span> <span style="color: var(--ctp-overlay2)">}</span> <span style="color: var(--ctp-mauve)">from</span> <span style="color: var(--ctp-green)">'./radio'</span><span style="color: var(--ctp-overlay2)">;</span></div><div class="line"><span class="line__no">3</span> </div><div class="line"><span class="line__no">4</span><span style="color: var(--ctp-mauve)">type</span> <span style="color: var(--ctp-yellow)">Status</span> <span style="color: var(--ctp-sky)">=</span> <span style="color: var(--ctp-green)">'docked'</span> <span style="color: var(--ctp-sky)">|</span> <span style="color: var(--ctp-green)">'drifting'</span><span style="color: var(--ctp-overlay2)">;</span></div><div class="line"><span class="line__no">5</span><span style="color: var(--ctp-mauve)">const</span> <span style="color: var(--ctp-text)">MAX_OXYGEN</span> <span style="color: var(--ctp-sky)">=</span> <span style="color: var(--ctp-peach)">0x3f</span><span style="color: var(--ctp-overlay2)">;</span></div><div class="line"><span class="line__no">6</span> </div><div class="line line--cursor"><span class="line__no line__no--active">7</span><span style="color: var(--ctp-mauve)">export</span> <span style="color: var(--ctp-mauve)">function</span> <span style="color: var(--ctp-blue)">hail</span><span style="color: var(--ctp-overlay2)">(</span><span style="color: var(--ctp-maroon)">crew</span><span style="color: var(--ctp-sky)">:</span> <span style="color: var(--ctp-yellow)">string</span><span style="color: var(--ctp-overlay2)">,</span> <span style="color: var(--ctp-maroon)">status</span><span style="color: var(--ctp-sky)">:</span> <span style="color: var(--ctp-yellow)">Status</span><span style="color: var(--ctp-overlay2)">)</span> <span style="color: var(--ctp-overlay2)">{</span><span class="cursor"></span></div><div class="line"><span class="line__no">8</span>  <span style="color: var(--ctp-mauve)">if</span> <span style="color: var(--ctp-overlay2)">(</span><span style="color: var(--ctp-maroon)">status</span> <span style="color: var(--ctp-sky)">===</span> <span style="color: var(--ctp-green)">'drifting'</span><span style="color: var(--ctp-overlay2)">)</span> <span style="color: var(--ctp-red)">console</span><span style="color: var(--ctp-overlay2)">.</span><span style="color: var(--ctp-blue)">warn</span><span style="color: var(--ctp-overlay2)">(</span><span style="color: var(--ctp-green)">`Lost: </span><span style="color: var(--ctp-pink)">${</span><span style="color: var(--ctp-maroon)">crew</span><span style="color: var(--ctp-pink)">}</span><span style="color: var(--ctp-green)">`</span><span style="color: var(--ctp-overlay2)">);</span></div><div class="line"><span class="line__no">9</span>  <span style="color: var(--ctp-mauve)">return</span> <span style="color: var(--ctp-mauve)">new</span> <span style="color: var(--ctp-yellow)">Signal</span><span style="color: var(--ctp-overlay2)">({</span> <span style="color: var(--ctp-blue)">freq</span><span style="color: var(--ctp-sky)">:</span> <span style="color: var(--ctp-peach)">121.5</span><span style="color: var(--ctp-overlay2)">,</span> <span style="color: var(--ctp-blue)">pattern</span><span style="color: var(--ctp-sky)">:</span> <span style="color: var(--ctp-pink)">/^SOS$/</span> <span style="color: var(--ctp-overlay2)">});</span></div><div class="line"><span class="line__no">10</span><span style="color: var(--ctp-overlay2)">}</span></div></div>
+</div>
+</section>
+</div>
+
+<div class="grid2">
+<section>
+<h2>Diff</h2>
+<div class="pane">
+<div class="pane__body diff"><div style="color: var(--ctp-blue)">diff --git a/launch.sh b/launch.sh</div><div class="meta">index 3f2a1c0..9b7e4d2 100755</div><div class="file">--- a/launch.sh</div><div class="file">+++ b/launch.sh</div><div class="hunk">@@ -12,4 +12,4 @@ ignite()</div><div> fuel_check</div><div class="del">-thrust <mark>--level 80</mark></div><div class="add">+thrust <mark>--level 95</mark></div><div class="chg"> orbit --wait</div></div>
+</div>
+</section>
+
+<section>
+<h2>UI</h2>
+<div class="dialog">Everything is going to be okay...</div>
+<div class="dialog dialog--light">Everything is going to be okay...</div>
+<div class="row">
+<button class="btn" style="background: var(--ctp-green)">Launch</button>
+<button class="btn" style="background: var(--ctp-red)">Abort</button>
+<button class="btn btn--ghost">Cancel</button>
+<span class="pill" style="background: var(--ctp-blue)">tag</span>
+<span class="pill" style="background: var(--ctp-mauve)">beta</span>
+</div>
+<div class="row status">
+<span style="color: var(--ctp-green)">✔ docked</span> <span style="color: var(--ctp-yellow)">▲ low fuel</span> <span style="color: var(--ctp-red)">✖ breach</span> <span style="color: var(--ctp-teal)">ℹ info</span>
+</div>
+</section>
+</div>
+</body>
+</html>

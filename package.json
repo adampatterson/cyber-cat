@@ -1,0 +1,14 @@
+{
+  "name": "cyber-cat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cyber Cat: a Catppuccin-format palette with a green handheld-screen UI",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node src/build.mjs",
+    "test": "node --test test/*.test.mjs"
+  }
+}
